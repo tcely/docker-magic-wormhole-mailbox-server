@@ -4,6 +4,8 @@
 FROM ghcr.io/tcely/docker-magic-wormhole-base AS magic-wormhole-mailbox-server
 
 RUN set -eux; \
+    . "${HOME}/bin/activate" && \
+    pip install --upgrade pip && \
     pip install magic-wormhole-mailbox-server
 
 VOLUME ["/app/data"]
