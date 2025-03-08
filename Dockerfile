@@ -15,6 +15,6 @@ RUN set -eu; \
 
 EXPOSE 4000/tcp
 VOLUME ["/data"]
-ENTRYPOINT ["/app/bin/entrypoint.sh", "twist", "wormhole-mailbox", "--channel-db=/data/channel.sqlite"]
+ENTRYPOINT ["/app/bin/entrypoint.sh", "twist", "--log-format=text", "wormhole-mailbox", "--channel-db=/data/channel.sqlite"]
 CMD ["--usage-db=/data/usage.sqlite"]
 
