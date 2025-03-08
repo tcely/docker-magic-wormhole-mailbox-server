@@ -13,6 +13,7 @@ RUN set -eu; \
     pip install --upgrade pip && \
     pip install magic-wormhole-mailbox-server
 
+EXPOSE 4000/tcp
 VOLUME ["/data"]
 ENTRYPOINT ["/app/bin/entrypoint.sh", "twist", "wormhole-mailbox", "--channel-db=/data/channel.sqlite"]
 CMD ["--usage-db=/data/usage.sqlite"]
