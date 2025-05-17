@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-FROM ghcr.io/tcely/docker-magic-wormhole-base AS magic-wormhole-mailbox-server
+FROM ghcr.io/tcely/docker-magic-wormhole-base:nightly AS magic-wormhole-mailbox-server
 
 USER root
 RUN set -eux; \
