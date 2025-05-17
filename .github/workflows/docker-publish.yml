@@ -75,7 +75,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: default
           provenance: false
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -97,3 +97,23 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
+      # service metadata
+      - name: Extract Docker metadata (service)
+        id: service-meta
+        uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: type=raw,value=service,priority=2000
+
+      # service build and push
+      - name: Build and push Docker image (service)
+        id: service-build-and-push
+        uses: docker/build-push-action@v6
+        with:
+          context: service
+          provenance: false
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.service-meta.outputs.tags }}
+          labels: ${{ steps.service-meta.outputs.labels }}
+          cache-from: type=gha
